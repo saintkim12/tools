@@ -4,6 +4,10 @@ export function setupCounter(element: HTMLButtonElement) {
     counter = count
     element.innerHTML = `count is ${counter}`
   }
-  element.addEventListener('click', () => setCounter(counter + 1))
+  const clickEvent = () => setCounter(counter + 1)
+  element.addEventListener('click', clickEvent)
   setCounter(0)
+  return () => {
+    element.removeEventListener('click', clickEvent)
+  }
 }
