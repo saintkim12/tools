@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+</body>
+<script type="module">
+  import { html, render, useState, useCallback } from 'https://esm.sh/htm/preact/standalone'
+  import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
+
+  const supabase = createClient('', '')
+  function App (props) {
+    const [id, setId] = useState(null);
+    const [itemData, setItemData] = useState({
+      itemId: '', itemName: '', itemCount: '', placeIn: '', description: '', userId: '',
+    })
+    const updateItemData = (nd) => setItemData({ ...itemData, ...nd })
+    const getItemData = useCallback(async () => {
+      const { data, error } = await supabase.from('test_json_data').select('content').eq('id', id);
+      if (error) {
+        console.error(error)
+      } else {
+        if (data[0]) {
+          setItemData(data[0].content)
+        }
+      }
+    }, [id, itemData])
+    const upsertItemData = useCallback(async () => {
+      if (id) {
+        const { error } = await supabase.from('test_json_data').update({ content: itemData }).eq('id', id)
+        if (error) {
+          console.error(error)
+        }
+      } else {
+        const { data, error } = await supabase.from('test_json_data').insert({ content: itemData }).select()
+        if (error) {
+          console.error(error)
+        } else {
+          setId(data.id)
+        }
+      }
+    }, [id, itemData])
+    return html`
+      <div>
+        <h1>Hello ${props.name}!</h1>
+        <h3>my tools</h3>
+        <div>
+          <div>id: <input value=${id} onInput=${(e) => setId(e.target.value)} placeholder="id" /></div>
+          <button onClick=${getItemData}>getItemData</button>
+        </div>
+        <div>
+          <div>itemId: <input value=${itemData.itemId} onInput=${(e) => updateItemData({ "itemId": e.target.value })} placeholder="itemId" /></div>
+          <div>itemName: <input value=${itemData.itemName} onInput=${(e) => updateItemData({ "itemName": e.target.value })} placeholder="itemName" /></div>
+          <div>itemCount: <input value=${itemData.itemCount} onInput=${(e) => updateItemData({ "itemCount": e.target.value })} placeholder="itemCount" /></div>
+          <div>placeIn: <input value=${itemData.placeIn} onInput=${(e) => updateItemData({ "placeIn": e.target.value })} placeholder="placeIn" /></div>
+          <div>description: <input value=${itemData.description} onInput=${(e) => updateItemData({ "description": e.target.value })} placeholder="description" /></div>
+          <div>userId: <input value=${itemData.userId} onInput=${(e) => updateItemData({ "userId": e.target.value })} placeholder="userId" /></div>
+          <button onClick=${upsertItemData}>${!id ? 'insert' : 'update'}ItemData</button>
+        </div>
+        <pre>
+          ${JSON.stringify(itemData)}  
+        </pre>
+      </div>
+    `;
+  }
+
+  render(html`<${App} name="World" />`, document.body);
+</script>
+
+</html>
