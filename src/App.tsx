@@ -1,4 +1,5 @@
 import { useCallback, useState } from 'react'
+import Uploader from './Uploader';
 // import { createClient } from '@supabase/supabase-js'
 
 // let supabase: any = null
@@ -30,6 +31,7 @@ export default function App() {
   }, [logs, inputText])
   return (
     <div>
+      <Uploader />
       <textarea value={inputText} onInput={(e) => setInputText(e.currentTarget.value)}></textarea>
       <button onClick={addData}>addData</button>
 
