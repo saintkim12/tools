@@ -1,5 +1,17 @@
 import { useCallback, useState } from 'react'
-import Uploader from './Uploader';
+import styled from 'styled-components'
+import Uploader from './Uploader'
+
+const Wrapper = styled.div`
+  width: calc(100vw - 30px * 2);
+  height: 100vh;
+  background-color: #eee;
+  padding: 30px;
+  * {
+    box-sizing: border-box;
+  }
+`
+
 // import { createClient } from '@supabase/supabase-js'
 
 // let supabase: any = null
@@ -30,9 +42,9 @@ export default function App() {
     setInputText('')
   }, [logs, inputText])
   return (
-    <div>
+    <Wrapper>
       <Uploader />
-      <textarea value={inputText} onInput={(e) => setInputText(e.currentTarget.value)}></textarea>
+      {/* <textarea value={inputText} onInput={(e) => setInputText(e.currentTarget.value)}></textarea>
       <button onClick={addData}>addData</button>
 
       <div>
@@ -41,7 +53,7 @@ export default function App() {
             {text} :: {new Date(timestamp).toISOString()}
           </p>
         ))}
-      </div>
-    </div>
+      </div> */}
+    </Wrapper>
   )
 }
