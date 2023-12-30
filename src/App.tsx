@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react'
+// import { useCallback, useState } from 'react'
 import styled from 'styled-components'
 import Uploader from './Uploader'
 
@@ -35,12 +35,12 @@ export default function App() {
   //   console.log('data', data)
   //   console.log('error', error)
   // }
-  const [inputText, setInputText] = useState('')
-  const [logs, setTextLogs] = useState<{ text: string; timestamp: number }[]>([])
-  const addData = useCallback(() => {
-    setTextLogs([...logs, { text: inputText, timestamp: Date.now() }])
-    setInputText('')
-  }, [logs, inputText])
+  // const [inputText, setInputText] = useState('')
+  // const [logs, setTextLogs] = useState<{ text: string; timestamp: number }[]>([])
+  // const addData = useCallback(() => {
+  //   setTextLogs([...logs, { text: inputText, timestamp: Date.now() }])
+  //   setInputText('')
+  // }, [logs, inputText])
   return (
     <Wrapper>
       <Uploader />
