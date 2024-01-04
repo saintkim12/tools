@@ -12,15 +12,6 @@ const Wrapper = styled.div`
   }
 `
 
-// import { createClient } from '@supabase/supabase-js'
-
-// let supabase: any = null
-// const getSupabase = () => {
-//   if (!supabase) {
-//     supabase = createClient(import.meta.env.VITE_SUPABASE_URL, import.meta.env.VITE_SUPABASE_KEY)
-//   }
-//   return supabase
-// }
 export default function App() {
   // useEffect(() => {
   //   const removeCounter = setupCounter(document.querySelector<HTMLButtonElement>('#counter')!)
